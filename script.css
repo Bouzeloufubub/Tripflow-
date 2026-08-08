@@ -1,0 +1,1388 @@
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+
+    --background: #f6f8fc;
+    --surface: #ffffff;
+    --surface-secondary: #f8fafc;
+
+    --text: #0f172a;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+
+    --border: #e2e8f0;
+
+    --danger: #dc2626;
+    --danger-light: #fef2f2;
+
+    --success: #16a34a;
+
+    --shadow-sm:
+        0 2px 8px rgba(15, 23, 42, 0.05);
+
+    --shadow:
+        0 8px 30px rgba(15, 23, 42, 0.07);
+
+    --shadow-lg:
+        0 20px 50px rgba(15, 23, 42, 0.12);
+
+    --radius-sm: 10px;
+    --radius: 18px;
+    --radius-lg: 24px;
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    min-height: 100vh;
+
+    background: var(--background);
+
+    color: var(--text);
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    -webkit-font-smoothing: antialiased;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease;
+}
+
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+
+button {
+    border: 0;
+    cursor: pointer;
+}
+
+
+button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+
+input,
+select,
+textarea {
+    outline: none;
+}
+
+
+#app {
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.top-header {
+    height: 68px;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 18px;
+
+    background: rgba(255, 255, 255, 0.92);
+
+    border-bottom: 1px solid var(--border);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+
+.top-header h1 {
+    font-size: 21px;
+    font-weight: 750;
+
+    letter-spacing: -0.5px;
+}
+
+
+.icon-btn {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: transparent;
+
+    color: var(--text);
+
+    font-size: 17px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.icon-btn:hover {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+
+.icon-btn:active {
+    transform: scale(0.94);
+}
+
+
+/* =====================================================
+   SIDE MENU
+===================================================== */
+
+#sideMenu {
+    position: fixed;
+
+    top: 0;
+    left: -290px;
+
+    width: 275px;
+    height: 100vh;
+
+    z-index: 2000;
+
+    padding: 85px 18px 25px;
+
+    background: var(--surface);
+
+    border-right: 1px solid var(--border);
+
+    box-shadow: var(--shadow-lg);
+
+    transition:
+        left 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+
+#sideMenu.open {
+    left: 0;
+}
+
+
+#sideMenu nav {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+
+#sideMenu button {
+    width: 100%;
+
+    min-height: 50px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 0 15px;
+
+    border-radius: 13px;
+
+    background: transparent;
+
+    color: var(--text-secondary);
+
+    text-align: left;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+#sideMenu button i {
+    width: 20px;
+
+    text-align: center;
+
+    font-size: 16px;
+}
+
+
+#sideMenu button:hover {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+
+#sideMenu button:active {
+    transform: scale(0.98);
+}
+
+
+#overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1500;
+
+    background: rgba(15, 23, 42, 0.4);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+}
+
+
+#overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+main {
+    width: 100%;
+
+    max-width: 1000px;
+
+    margin: 0 auto;
+
+    padding: 22px 16px 45px;
+}
+
+
+.page {
+    display: none;
+
+    animation:
+        pageIn 0.28s ease;
+}
+
+
+.page.active {
+    display: block;
+}
+
+
+@keyframes pageIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =====================================================
+   WELCOME
+===================================================== */
+
+.welcome-card {
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 26px;
+
+    margin-bottom: 18px;
+
+    border-radius: var(--radius-lg);
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1d4ed8 0%,
+            #2563eb 55%,
+            #3b82f6 100%
+        );
+
+    box-shadow:
+        0 16px 35px rgba(37, 99, 235, 0.2);
+}
+
+
+.welcome-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 170px;
+    height: 170px;
+
+    right: -70px;
+    top: -70px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.08);
+}
+
+
+.welcome-label,
+.section-eyebrow {
+    display: block;
+
+    font-size: 11px;
+
+    font-weight: 750;
+
+    letter-spacing: 1.2px;
+
+    text-transform: uppercase;
+}
+
+
+.welcome-label {
+    margin-bottom: 9px;
+
+    color: rgba(255,255,255,0.75);
+}
+
+
+.welcome-card h2 {
+    position: relative;
+    z-index: 1;
+
+    max-width: 500px;
+
+    margin-bottom: 9px;
+
+    font-size: 24px;
+
+    line-height: 1.2;
+
+    letter-spacing: -0.6px;
+}
+
+
+.welcome-card p:last-child {
+    position: relative;
+    z-index: 1;
+
+    max-width: 550px;
+
+    color: rgba(255,255,255,0.82);
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   MAP
+===================================================== */
+
+.map-container {
+    position: relative;
+
+    width: 100%;
+    height: 330px;
+
+    margin-bottom: 18px;
+
+    overflow: hidden;
+
+    border-radius: var(--radius-lg);
+
+    background: #e2e8f0;
+
+    box-shadow: var(--shadow);
+}
+
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+
+.leaflet-control-zoom {
+    border: none !important;
+
+    box-shadow: var(--shadow) !important;
+}
+
+
+.leaflet-control-zoom a {
+    color: var(--text) !important;
+}
+
+
+/* =====================================================
+   CUSTOM MAP MARKER
+===================================================== */
+
+.custom-marker {
+    width: 40px !important;
+    height: 40px !important;
+
+    display: flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--primary);
+
+    border: 3px solid white;
+
+    color: white;
+
+    font-size: 16px;
+
+    box-shadow:
+        0 5px 18px rgba(15, 23, 42, 0.22);
+
+    transition:
+        transform 0.2s ease;
+}
+
+
+.custom-marker:hover {
+    transform: scale(1.08);
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+.stats-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+}
+
+
+.stat-card {
+    min-height: 132px;
+
+    padding: 18px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    background: var(--surface);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.stat-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow);
+}
+
+
+.stat-card i {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+
+    font-size: 15px;
+}
+
+
+.stat-card span {
+    margin-top: 10px;
+
+    font-size: 22px;
+
+    font-weight: 750;
+
+    letter-spacing: -0.5px;
+}
+
+
+.stat-card small {
+    color: var(--text-secondary);
+
+    font-size: 12px;
+
+    font-weight: 500;
+}
+
+
+/* =====================================================
+   PAGE HEADER
+===================================================== */
+
+.page-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 22px;
+}
+
+
+.page-header h2 {
+    margin-top: 4px;
+
+    font-size: 27px;
+
+    line-height: 1.1;
+
+    letter-spacing: -0.7px;
+}
+
+
+.section-eyebrow {
+    color: var(--primary);
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.primary-btn {
+    min-height: 44px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 0 16px;
+
+    border-radius: 13px;
+
+    background: var(--primary);
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 650;
+
+    box-shadow:
+        0 5px 15px rgba(37, 99, 235, 0.18);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.primary-btn:hover {
+    background: var(--primary-dark);
+
+    box-shadow:
+        0 7px 20px rgba(37, 99, 235, 0.24);
+}
+
+
+.primary-btn:active {
+    transform: scale(0.97);
+}
+
+
+/* =====================================================
+   ITEM CARDS
+===================================================== */
+
+.item-card {
+    position: relative;
+
+    padding: 19px;
+
+    margin-bottom: 13px;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    background: var(--surface);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.item-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow);
+}
+
+
+.item-card h3 {
+    margin-bottom: 7px;
+
+    font-size: 17px;
+
+    letter-spacing: -0.2px;
+}
+
+
+.item-card p {
+    margin: 5px 0;
+
+    color: var(--text-secondary);
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+.active-trip {
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 3px var(--primary-light),
+        var(--shadow);
+}
+
+
+/* =====================================================
+   TRIP ACTIONS
+===================================================== */
+
+.trip-actions {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 16px;
+}
+
+
+.trip-actions button {
+    min-height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 0 12px;
+
+    border-radius: 10px;
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.trip-actions button:hover {
+    background: #dbeafe;
+}
+
+
+.trip-actions button:active {
+    transform: scale(0.96);
+}
+
+
+.trip-actions button:last-child {
+    background: var(--danger-light);
+
+    color: var(--danger);
+}
+
+
+/* =====================================================
+   FORM HEADER
+===================================================== */
+
+.form-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 22px;
+}
+
+
+.form-header .icon-btn {
+    flex-shrink: 0;
+
+    border: 1px solid var(--border);
+
+    background: var(--surface);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+.form-header h2 {
+    margin-top: 4px;
+
+    font-size: 24px;
+
+    letter-spacing: -0.5px;
+}
+
+
+/* =====================================================
+   FORM CARD
+===================================================== */
+
+.form-card {
+    padding: 22px;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-lg);
+
+    background: var(--surface);
+
+    box-shadow: var(--shadow);
+}
+
+
+/* =====================================================
+   FORM INTRO
+===================================================== */
+
+.form-intro {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding-bottom: 20px;
+
+    margin-bottom: 4px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+
+.form-intro-icon {
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+
+    font-size: 18px;
+}
+
+
+.form-intro h3 {
+    margin-bottom: 3px;
+
+    font-size: 16px;
+}
+
+
+.form-intro p {
+    color: var(--text-secondary);
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =====================================================
+   FORM GROUP
+===================================================== */
+
+.form-group {
+    margin-top: 19px;
+}
+
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--text);
+
+    font-size: 13px;
+
+    font-weight: 650;
+}
+
+
+.form-group label span {
+    color: var(--text-muted);
+
+    font-weight: 450;
+}
+
+
+/* =====================================================
+   INPUT WRAPPER
+===================================================== */
+
+.input-wrapper {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+}
+
+
+.input-wrapper > i {
+    position: absolute;
+
+    left: 15px;
+
+    z-index: 2;
+
+    color: var(--text-muted);
+
+    font-size: 14px;
+
+    pointer-events: none;
+
+    transition:
+        color 0.2s ease;
+}
+
+
+.input-wrapper input,
+.input-wrapper select,
+.input-wrapper textarea {
+    width: 100%;
+
+    border: 1px solid var(--border);
+
+    border-radius: 13px;
+
+    background: var(--surface-secondary);
+
+    color: var(--text);
+
+    font-size: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.input-wrapper input,
+.input-wrapper select {
+    height: 50px;
+
+    padding:
+        0 15px 0 44px;
+}
+
+
+.input-wrapper textarea {
+    min-height: 125px;
+
+    padding:
+        15px 15px 15px 44px;
+
+    resize: vertical;
+
+    line-height: 1.5;
+}
+
+
+.input-wrapper input::placeholder,
+.input-wrapper textarea::placeholder {
+    color: var(--text-muted);
+}
+
+
+.input-wrapper input:focus,
+.input-wrapper select:focus,
+.input-wrapper textarea:focus {
+    border-color: var(--primary);
+
+    background: var(--surface);
+
+    box-shadow:
+        0 0 0 4px rgba(37, 99, 235, 0.09);
+}
+
+
+.input-wrapper:focus-within > i {
+    color: var(--primary);
+}
+
+
+.field-hint {
+    display: block;
+
+    margin-top: 7px;
+
+    color: var(--text-muted);
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+
+/* =====================================================
+   SELECT
+===================================================== */
+
+.input-wrapper select {
+    appearance: none;
+
+    -webkit-appearance: none;
+
+    cursor: pointer;
+}
+
+
+.input-wrapper select {
+    background-image:
+        linear-gradient(
+            45deg,
+            transparent 50%,
+            var(--text-secondary) 50%
+        ),
+        linear-gradient(
+            135deg,
+            var(--text-secondary) 50%,
+            transparent 50%
+        );
+
+    background-position:
+        calc(100% - 18px) 21px,
+        calc(100% - 13px) 21px;
+
+    background-size:
+        5px 5px,
+        5px 5px;
+
+    background-repeat: no-repeat;
+}
+
+
+/* =====================================================
+   SAVE BUTTON
+===================================================== */
+
+.save-btn {
+    width: 100%;
+
+    min-height: 53px;
+
+    margin-top: 25px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 650;
+
+    box-shadow:
+        0 8px 20px rgba(37, 99, 235, 0.2);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.save-btn:hover {
+    box-shadow:
+        0 11px 25px rgba(37, 99, 235, 0.28);
+}
+
+
+.save-btn:active {
+    transform: scale(0.98);
+}
+
+
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+.setting-card {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 17px;
+
+    margin-bottom: 12px;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    background: var(--surface);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+.setting-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+}
+
+
+.setting-icon {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+}
+
+
+.setting-info strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 14px;
+}
+
+
+.setting-info p {
+    color: var(--text-secondary);
+
+    font-size: 11px;
+
+    line-height: 1.4;
+}
+
+
+.setting-card > button {
+    min-height: 38px;
+
+    padding: 0 13px;
+
+    border-radius: 10px;
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+
+    font-size: 12px;
+
+    font-weight: 650;
+}
+
+
+/* =====================================================
+   MAP POPUP
+===================================================== */
+
+.map-popup strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: var(--text);
+}
+
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+body.dark {
+    --background: #080d18;
+
+    --surface: #101827;
+
+    --surface-secondary: #0c1422;
+
+    --text: #f1f5f9;
+
+    --text-secondary: #94a3b8;
+
+    --text-muted: #64748b;
+
+    --border: #1e293b;
+
+    --primary-light: rgba(37, 99, 235, 0.14);
+
+    --danger-light: rgba(220, 38, 38, 0.12);
+
+    --shadow-sm:
+        0 2px 8px rgba(0, 0, 0, 0.2);
+
+    --shadow:
+        0 8px 30px rgba(0, 0, 0, 0.25);
+
+    --shadow-lg:
+        0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+
+body.dark .top-header {
+    background: rgba(16, 24, 39, 0.92);
+}
+
+
+body.dark .map-container {
+    background: #172033;
+}
+
+
+body.dark .leaflet-tile {
+    filter:
+        brightness(0.72)
+        contrast(1.08)
+        saturate(0.8);
+}
+
+
+body.dark .form-card,
+body.dark .item-card,
+body.dark .stat-card,
+body.dark .setting-card,
+body.dark .form-header .icon-btn {
+    background: var(--surface);
+}
+
+
+/* =====================================================
+   RESPONSIVE TABLET / DESKTOP
+===================================================== */
+
+@media (min-width: 650px) {
+
+    main {
+        padding:
+            30px 24px 55px;
+    }
+
+
+    .map-container {
+        height: 420px;
+    }
+
+
+    .stats-grid {
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+    }
+
+
+    .form-card {
+        padding: 30px;
+    }
+
+}
+
+
+@media (min-width: 900px) {
+
+    main {
+        max-width: 1100px;
+    }
+
+
+    .welcome-card {
+        padding: 32px;
+    }
+
+
+    .welcome-card h2 {
+        font-size: 29px;
+    }
+
+
+    .map-container {
+        height: 480px;
+    }
+
+}
+
+
+/* =====================================================
+   PETITS ÉCRANS
+===================================================== */
+
+@media (max-width: 380px) {
+
+    main {
+        padding:
+            17px 12px 35px;
+    }
+
+
+    .top-header {
+        padding: 0 12px;
+    }
+
+
+    .welcome-card {
+        padding: 21px;
+    }
+
+
+    .welcome-card h2 {
+        font-size: 21px;
+    }
+
+
+    .page-header h2 {
+        font-size: 23px;
+    }
+
+
+    .primary-btn {
+        padding: 0 12px;
+    }
+
+
+    .form-card {
+        padding: 17px;
+    }
+
+
+    .form-intro p {
+        font-size: 11px;
+    }
+
+}

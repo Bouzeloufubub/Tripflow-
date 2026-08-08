@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#2563EB"
+    >
+
+    <meta
+        name="description"
+        content="TripFlow — Planifiez vos voyages simplement."
+    >
+
+    <title>TripFlow</title>
+
+
+    <!-- PWA -->
+
+    <link
+        rel="manifest"
+        href="manifest.json"
+    >
+
+
+    <!-- Leaflet -->
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+
+    <!-- Font Awesome -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <!-- CSS -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div id="app">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+
+    <header class="top-header">
+
+
+        <button
+            class="icon-btn"
+            id="menuBtn"
+            aria-label="Ouvrir le menu"
+        >
+
+            <i class="fa-solid fa-bars"></i>
+
+        </button>
+
+
+        <h1>
+            TripFlow
+        </h1>
+
+
+        <button
+            class="icon-btn"
+            id="themeBtn"
+            aria-label="Changer le thème"
+        >
+
+            <i class="fa-solid fa-moon"></i>
+
+        </button>
+
+
+    </header>
+
+
+
+
+    <!-- =====================================================
+         MENU LATÉRAL
+    ====================================================== -->
+
+
+    <aside id="sideMenu">
+
+
+        <nav>
+
+
+            <button
+                type="button"
+                data-page="home"
+            >
+
+                <i class="fa-solid fa-house"></i>
+
+                <span>
+                    Accueil
+                </span>
+
+            </button>
+
+
+
+            <button
+                type="button"
+                data-page="stops"
+            >
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                <span>
+                    Arrêts
+                </span>
+
+            </button>
+
+
+
+            <button
+                type="button"
+                data-page="routes"
+            >
+
+                <i class="fa-solid fa-route"></i>
+
+                <span>
+                    Trajets
+                </span>
+
+            </button>
+
+
+
+            <button
+                type="button"
+                data-page="trips"
+            >
+
+                <i class="fa-solid fa-suitcase"></i>
+
+                <span>
+                    Voyages
+                </span>
+
+            </button>
+
+
+
+            <button
+                type="button"
+                data-page="settings"
+            >
+
+                <i class="fa-solid fa-gear"></i>
+
+                <span>
+                    Réglages
+                </span>
+
+            </button>
+
+
+        </nav>
+
+
+    </aside>
+
+
+    <div id="overlay"></div>
+
+
+
+
+    <!-- =====================================================
+         CONTENU PRINCIPAL
+    ====================================================== -->
+
+
+    <main>
+
+
+
+        <!-- =================================================
+             ACCUEIL
+        ================================================== -->
+
+
+        <section
+            id="home"
+            class="page active"
+        >
+
+
+            <div class="welcome-card">
+
+
+                <p class="welcome-label">
+                    VOTRE VOYAGE
+                </p>
+
+
+                <h2>
+                    Planifiez votre prochaine aventure
+                </h2>
+
+
+                <p>
+                    Organisez vos étapes, vos trajets
+                    et votre budget au même endroit.
+                </p>
+
+
+            </div>
+
+
+
+            <!-- CARTE -->
+
+
+            <div class="map-container">
+
+                <div id="map"></div>
+
+            </div>
+
+
+
+            <!-- STATISTIQUES -->
+
+
+            <div class="stats-grid">
+
+
+                <div class="stat-card">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    <span id="stopCount">
+                        0
+                    </span>
+
+                    <small>
+                        Arrêts
+                    </small>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <i class="fa-solid fa-route"></i>
+
+                    <span id="routeCount">
+                        0
+                    </span>
+
+                    <small>
+                        Trajets
+                    </small>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <i class="fa-solid fa-wallet"></i>
+
+                    <span id="budgetTotal">
+                        0 €
+                    </span>
+
+                    <small>
+                        Budget
+                    </small>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <i class="fa-solid fa-calendar-days"></i>
+
+                    <span id="durationTotal">
+                        0 j
+                    </span>
+
+                    <small>
+                        Durée
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+
+        <!-- =================================================
+             ARRÊTS
+        ================================================== -->
+
+
+        <section
+            id="stops"
+            class="page"
+        >
+
+
+            <div class="page-header">
+
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        ITINÉRAIRE
+                    </span>
+
+                    <h2>
+                        Arrêts
+                    </h2>
+
+                </div>
+
+
+                <button
+                    class="primary-btn"
+                    id="addStopBtn"
+                    type="button"
+                >
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    <span>
+                        Ajouter
+                    </span>
+
+                </button>
+
+
+            </div>
+
+
+            <div id="stopsList"></div>
+
+
+        </section>
+
+
+
+
+        <!-- =================================================
+             PAGE AJOUTER UN ARRÊT
+        ================================================== -->
+
+
+        <section
+            id="addStopPage"
+            class="page"
+        >
+
+
+            <div class="form-header">
+
+
+                <button
+                    class="icon-btn"
+                    id="backStopBtn"
+                    type="button"
+                    aria-label="Retour"
+                >
+
+                    <i class="fa-solid fa-arrow-left"></i>
+
+                </button>
+
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        NOUVELLE ÉTAPE
+                    </span>
+
+                    <h2>
+                        Ajouter un arrêt
+                    </h2>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="form-card">
+
+
+                <div class="form-intro">
+
+                    <div class="form-intro-icon">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Détails de l'arrêt
+                        </h3>
+
+                        <p>
+                            Ajoutez les informations
+                            de cette étape de votre voyage.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- NOM -->
+
+
+                <div class="form-group">
+
+                    <label for="stopName">
+                        Nom de l'arrêt
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-bookmark"></i>
+
+
+                        <input
+                            id="stopName"
+                            type="text"
+                            placeholder="Ex. Hôtel à Paris"
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+
+                <!-- LIEU -->
+
+
+                <div class="form-group">
+
+                    <label for="stopPlace">
+                        Lieu
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+
+                        <input
+                            id="stopPlace"
+                            type="text"
+                            placeholder="Ex. Paris, France"
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+
+                    <small class="field-hint">
+                        Le lieu sera automatiquement localisé
+                        sur la carte.
+                    </small>
+
+                </div>
+
+
+
+
+                <!-- TYPE -->
+
+
+                <div class="form-group">
+
+                    <label for="stopType">
+                        Type d'arrêt
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-tag"></i>
+
+
+                        <select id="stopType">
+
+                            <option value="visit">
+                                Visite
+                            </option>
+
+                            <option value="hotel">
+                                Hôtel
+                            </option>
+
+                            <option value="restaurant">
+                                Restaurant
+                            </option>
+
+                            <option value="museum">
+                                Musée
+                            </option>
+
+                            <option value="beach">
+                                Plage
+                            </option>
+
+                            <option value="home">
+                                Maison
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+
+                <!-- DATE -->
+
+
+                <div class="form-group">
+
+                    <label for="stopDate">
+                        Date
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-calendar-days"></i>
+
+
+                        <input
+                            id="stopDate"
+                            type="date"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+
+                <!-- PRIX -->
+
+
+                <div class="form-group">
+
+                    <label for="stopPrice">
+                        Prix
+                        <span>
+                            (optionnel)
+                        </span>
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-euro-sign"></i>
+
+
+                        <input
+                            id="stopPrice"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            placeholder="0"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+
+                <!-- NOTES -->
+
+
+                <div class="form-group">
+
+                    <label for="stopNotes">
+                        Notes
+                        <span>
+                            (optionnel)
+                        </span>
+                    </label>
+
+
+                    <div class="input-wrapper textarea-wrapper">
+
+                        <i class="fa-solid fa-note-sticky"></i>
+
+
+                        <textarea
+                            id="stopNotes"
+                            placeholder="Ajoutez des informations utiles..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+
+
+                <!-- BOUTON -->
+
+
+                <button
+                    class="save-btn"
+                    id="saveStopBtn"
+                    type="button"
+                >
+
+                    <i class="fa-solid fa-check"></i>
+
+                    <span>
+                        Enregistrer l'arrêt
+                    </span>
+
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+
+
+        <!-- =================================================
+             TRAJETS
+        ================================================== -->
+
+
+        <section
+            id="routes"
+            class="page"
+        >
+
+
+            <div class="page-header">
+
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        DÉPLACEMENTS
+                    </span>
+
+                    <h2>
+                        Trajets
+                    </h2>
+
+                </div>
+
+
+                <button
+                    class="primary-btn"
+                    id="addRouteBtn"
+                    type="button"
+                >
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    <span>
+                        Ajouter
+                    </span>
+
+                </button>
+
+
+            </div>
+
+
+            <div id="routesList"></div>
+
+
+        </section>
+
+
+
+
+        <!-- =================================================
+             VOYAGES
+        ================================================== -->
+
+
+        <section
+            id="trips"
+            class="page"
+        >
+
+
+            <div class="page-header">
+
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        MES VOYAGES
+                    </span>
+
+                    <h2>
+                        Voyages
+                    </h2>
+
+                </div>
+
+
+                <button
+                    class="primary-btn"
+                    id="addTripBtn"
+                    type="button"
+                >
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    <span>
+                        Nouveau
+                    </span>
+
+                </button>
+
+
+            </div>
+
+
+            <div id="tripsList"></div>
+
+
+        </section>
+
+
+
+
+        <!-- =================================================
+             RÉGLAGES
+        ================================================== -->
+
+
+        <section
+            id="settings"
+            class="page"
+        >
+
+
+            <div class="page-header">
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        APPLICATION
+                    </span>
+
+                    <h2>
+                        Réglages
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="setting-card">
+
+
+                <div class="setting-info">
+
+                    <div class="setting-icon">
+
+                        <i class="fa-solid fa-moon"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Mode sombre
+                        </strong>
+
+                        <p>
+                            Adapter l'apparence de TripFlow
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="darkToggle"
+                    type="button"
+                >
+
+                    Activer
+
+                </button>
+
+
+            </div>
+
+
+
+            <div class="setting-card">
+
+
+                <div class="setting-info">
+
+                    <div class="setting-icon">
+
+                        <i class="fa-solid fa-database"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Données locales
+                        </strong>
+
+                        <p>
+                            Vos voyages sont enregistrés
+                            sur cet appareil.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="clearData"
+                    type="button"
+                >
+
+                    Effacer
+
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+
+<!-- =====================================================
+     LEAFLET
+====================================================== -->
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+
+
+
+<!-- =====================================================
+     TRIPFLOW
+====================================================== -->
+
+<script src="app.js"></script>
+
+
+
+<!-- =====================================================
+     SERVICE WORKER
+====================================================== -->
+
+<script>
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener(
+        "load",
+        () => {
+
+            navigator.serviceWorker.register(
+                "./service-worker.js"
+            )
+            .catch(error => {
+
+                console.error(
+                    "Service Worker :",
+                    error
+                );
+
+            });
+
+        }
+    );
+
+}
+
+</script>
+
+
+</body>
+
+</html>
